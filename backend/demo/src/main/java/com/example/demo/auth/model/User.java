@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @Column(name = "verification_code")
     private String verificationCode;
     @Column(name = "verification_expiration")
-    private LocalDateTime verificationExpiration;
+    private LocalDateTime VerificationCodeExpiresAt;
     @Column(unique = true, nullable = false) //makes sure username and emails are unique and not empty
     private String username;
     @Column(unique=true, nullable = false)
