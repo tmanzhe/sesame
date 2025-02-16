@@ -1,6 +1,6 @@
 package com.example.demo.config;
 
-import com.example.demo.auth.repository.UserRepository;
+import com.example.demo.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -67,4 +67,5 @@ public class ApplicationConfiguration {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
+
 }

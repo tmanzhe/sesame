@@ -1,4 +1,4 @@
-package com.example.demo.auth.service;
+package com.example.demo.service;
 
 import java.security.Key;
 import java.util.Date;
@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import io.jsonwebtoken.Claims;
+
+import javax.crypto.SecretKey;
 
 @Service
 public class JwtService {
@@ -57,11 +59,11 @@ public class JwtService {
             long expiration) {
         return Jwts
                 .builder()
-                .setClaims(extraClaims) // Adds extra claims to the token
-                .setSubject(userDetails.getUsername()) // Sets the subject (username)
-                .setIssuedAt(new Date(System.currentTimeMillis())) // Sets issue time to now
-                .setExpiration(new Date(System.currentTimeMillis() + expiration)) // Sets expiration time
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256) // Signs the token using HMAC SHA-256
+                .claims(extraClaims) // Adds extra claims to the token
+                .subject(userDetails.getUsername()) // Sets the subject (username)
+                .issuedAt(new Date(System.currentTimeMillis())) // Sets issue time to now
+                .expiration(new Date(System.currentTimeMillis() + expiration)) // Sets expiration time
+                .signWith(getSignInKey()) // Signs the token using HMAC SHA-256
                 .compact(); // Generates the final JWT token string
     }
 
@@ -82,16 +84,18 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser() // Use parser() instead of parserBuilder()
-                .setSigningKey(getSignInKey()) // Use setSigningKey() instead of verifyWith()
-                .build() // Build the JwtParser from the JwtParserBuilder
-                .parseClaimsJws(token) // Use parseClaimsJws() on the built parser
-                .getBody();
+        // Extract claims after signature verification
+        return Jwts
+                .parser()
+                .verifyWith(getSignInKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
-    // Converts the base64-encoded secret key into a cryptographic key for signing
-    private Key getSignInKey() {
+
+    private SecretKey getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey); // Decodes the base64 key
-        return Keys.hmacShaKeyFor(keyBytes); // Converts it into an HMAC key
+        return Keys.hmacShaKeyFor(keyBytes); // ✅ Returns a SecretKey (compatible with verifyWith)
     }
 }
 

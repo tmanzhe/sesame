@@ -1,4 +1,4 @@
-package com.example.demo.auth.responses;
+package com.example.demo.responses;
 
 import lombok.Getter;
 import lombok.Setter;

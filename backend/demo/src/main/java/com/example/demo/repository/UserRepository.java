@@ -1,6 +1,6 @@
-package com.example.demo.auth.repository;
+package com.example.demo.repository;
 
-import com.example.demo.auth.model.User;
+import com.example.demo.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Optional<User> findByEmail (String email);
     Optional<User> findByVerificationCode(String verificationCode);
-
-
 
 }

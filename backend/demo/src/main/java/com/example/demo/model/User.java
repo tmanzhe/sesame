@@ -1,7 +1,7 @@
 //models pacakge in springboot serves the purpose of defining the structure of your data and it's connection to the database.
 //represents real world entities (user,products,order etc)
 
-package com.example.demo.auth.model;
+package com.example.demo.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
