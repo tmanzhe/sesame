@@ -98,25 +98,3 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes); // ✅ Returns a SecretKey (compatible with verifyWith)
     }
 }
-
-/*
-summary:
-
-when a user logs in the system gives the user a digital passport.
-this digital passport contains information unique to the user (so only info the users can see)
-whenever they make a request to use OUR service, user has to present their passport to prove that they are valid
-our system will check if they are valid or not
-
-How Does JWT Work Here?
-	1.	User logs in
-	•	The system generates a JWT using generateToken().
-	•	The JWT contains the username and other details.
-	•	It is signed with a secret key so nobody can tamper with it.
-	2.	User makes a request
-	•	The system extracts the username from the JWT using extractUsername().
-	•	It checks if the JWT is valid using isTokenValid().
-	•	If valid, the user is allowed to proceed.
-	3.	System checks token expiration
-	•	Each token has an expiration time (jwtExpiration).
-	•	The system checks if the token is still valid using isTokenExpired().
- */

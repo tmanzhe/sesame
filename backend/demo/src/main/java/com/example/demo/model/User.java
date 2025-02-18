@@ -1,6 +1,3 @@
-//models pacakge in springboot serves the purpose of defining the structure of your data and it's connection to the database.
-//represents real world entities (user,products,order etc)
-
 package com.example.demo.model;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,6 +33,8 @@ public class User implements UserDetails {
     private String email;
     @Column(nullable = false) //make sure password is not empty
     private String password;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<>();
 
     public User(String username, String email, String password) {
         this.username = username;
